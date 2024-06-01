@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PSWD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PSWD}@db:${DB_PORT}/${DB_NAME}"
+      COB_API: ${ECB_COB_API}
+      LOG_LEVEL: "info"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://localhost:8000/v1/health-check"
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  backend-tests:
+    build:
+      context: ./backend
+    command: [ "poetry", "run", "pytest" ]
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PSWD}@db:${DB_PORT}/${DB_NAME}"
+      COB_API: ${ECB_COB_API}
+      LOG_LEVEL: "info"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend-tests:
+        condition: service_completed_successfully
+      backend:
+        condition: service_healthy
+    environment:
+      BACKEND_URL: "http://backend:8000/v1/data"
+  # frontend-tests:
+  #   build:
+  #     context: ./frontend
+  #   command: [ "npm", "test" ]
+  #   depends_on:
+  #     - frontend
+
+volumes:
+  db_data:

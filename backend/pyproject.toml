@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "cob-webapp"
+version = "0.1.0"
+description = ""
+authors = ["Harsh Chauhan <hchauhan7417@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+sqlalchemy = "^2.0.30"
+requests = "^2.32.2"
+uvicorn = "^0.30.0"
+pytest = "^8.2.0"
+psycopg2-binary = "^2.9.9"
+python-dateutil = "^2.9.0.post0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.1.0"
+mypy = "^1.10.0"
+black = "^24.4.2"
+isort = "^5.13.2"
+
+[tool.isort]
+profile = "black" 
+
+[tool.black]
+line-length = 120
+
+[[tool.mypy.overrides]]
+module = []
+ignore_missing_imports = true
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

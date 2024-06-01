@@ -1,0 +1,163 @@
+{
+    "header": {
+        "id": "90feb52e-cd5b-4e5c-be12-e1b042868035",
+        "test": false,
+        "prepared": "2024-06-01T18:05:30.494+02:00",
+        "sender": {
+            "id": "ECB"
+        }
+    },
+    "dataSets": [
+        {
+            "action": "Replace",
+            "validFrom": "2024-06-01T18:05:30.494+02:00",
+            "series": {
+                "0:0:0:0:0:0:0:0:0:0": {
+                    "observations": {
+                        "0": [
+                            2.68
+                        ],
+                        "1": [
+                            3.11
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "structure": {
+        "links": [
+            {
+                "title": "MFI Interest Rate Statistics",
+                "rel": "dataflow",
+                "href": "http://data-api.ecb.europa.eu:80/service/dataflow/ECB/MIR/1.0"
+            }
+        ],
+        "name": "MFI Interest Rate Statistics",
+        "dimensions": {
+            "series": [
+                {
+                    "id": "FREQ",
+                    "name": "Frequency",
+                    "values": [
+                        {
+                            "id": "M",
+                            "name": "Monthly"
+                        }
+                    ]
+                },
+                {
+                    "id": "REF_AREA",
+                    "name": "Reference area",
+                    "values": [
+                        {
+                            "id": "U2",
+                            "name": "Euro area (changing composition)"
+                        }
+                    ]
+                },
+                {
+                    "id": "BS_REP_SECTOR",
+                    "name": "BS reference sector breakdown",
+                    "values": [
+                        {
+                            "id": "B",
+                            "name": "Deposit-taking corporations except the central bank (S.122)"
+                        }
+                    ]
+                },
+                {
+                    "id": "BS_ITEM",
+                    "name": "Balance sheet item",
+                    "values": [
+                        {
+                            "id": "A2C",
+                            "name": "Lending for house purchase excluding revolving loans and overdrafts, convenience and extended credit card debt"
+                        }
+                    ]
+                },
+                {
+                    "id": "MATURITY_NOT_IRATE",
+                    "name": "Original maturity/Period of notice/Initial rate fixation",
+                    "values": [
+                        {
+                            "id": "AM",
+                            "name": "Total calculated by weighting the volumes with a moving average (defined for cost of borrowing purposes)"
+                        }
+                    ]
+                },
+                {
+                    "id": "DATA_TYPE_MIR",
+                    "name": "MFI interest rate data type",
+                    "values": [
+                        {
+                            "id": "R",
+                            "name": "Annualised agreed rate (AAR) / Narrowly defined effective rate (NDER)"
+                        }
+                    ]
+                },
+                {
+                    "id": "AMOUNT_CAT",
+                    "name": "Amount category",
+                    "values": [
+                        {
+                            "id": "A",
+                            "name": "Total"
+                        }
+                    ]
+                },
+                {
+                    "id": "BS_COUNT_SECTOR",
+                    "name": "BS counterpart sector",
+                    "values": [
+                        {
+                            "id": "2250",
+                            "name": "Households and non-profit institutions serving households (S.14 and S.15)"
+                        }
+                    ]
+                },
+                {
+                    "id": "CURRENCY_TRANS",
+                    "name": "Currency of transaction",
+                    "values": [
+                        {
+                            "id": "EUR",
+                            "name": "Euro"
+                        }
+                    ]
+                },
+                {
+                    "id": "IR_BUS_COV",
+                    "name": "IR business coverage",
+                    "values": [
+                        {
+                            "id": "N",
+                            "name": "New business"
+                        }
+                    ]
+                }
+            ],
+            "observation": [
+                {
+                    "id": "TIME_PERIOD",
+                    "name": "Time period or range",
+                    "role": "time",
+                    "values": [
+                        {
+                            "id": "2024-02",
+                            "name": "2024-02",
+                            "start": "2024-02-01T00:00:00.000+01:00",
+                            "end": "2024-02-29T23:59:59.999+01:00"
+                        },
+                        {
+                            "id": "2024-03",
+                            "name": "2024-03",
+                            "start": "2024-03-01T00:00:00.000+01:00",
+                            "end": "2024-03-31T23:59:59.999+02:00"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
