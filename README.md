@@ -3,6 +3,8 @@
 ## Overview
 This project collects data from the European Central Bank's (ECB) APIs for the series "Cost of borrowing for households for house purchase - euro area, Euro area (changing composition), Monthly". The collected data is stored in PostgreSQL through an api endpoint provided by the backend(FastApi). Finally, a React web page using Chart.js displays the data from the backend as a line graph.
 
+[Key architectural decisions](#key-decisions)
+
 ## Components
 
 The project consists of the following components:
@@ -47,7 +49,13 @@ For the very first time, the line graph will be empty as at this time we don't h
 1) On web page, there is refresh button at top right corner. If you click, it will call the backend endpoint which will fetch the data from ECB endpoint and will load into database table.
 2) Directly through the backend endpoint. To access all backend endpoints, you can visit http://localhost:8000/docs
 
-## Key architectural decisions/considerations:
+## Clean Up
+To clean up Docker volumes after running the project, you can use the following command:
+```bash
+docker-compose down --volumes
+```
+
+## Key architectural decisions/considerations: {#key-decisions}
 **Question 1** : Should we load the data on every api hit?
 
 **Answer** : Analyzed the data, and learnt that data updation is not frequent and mostly happen once in a month. Hence it doesn't make sense to refresh the data in database on every call. I have designed the backend system to use http response code 304 from the ECB api, which means data will be only loaded/refreshed in our database if there is any change in data from ECB.
@@ -57,13 +65,6 @@ For the very first time, the line graph will be empty as at this time we don't h
 **Answer**: Given it is monthly aggregated data and have only one record per month. So, even if it is 100 years of data, it will be only 100*12 = 1200 records. Hence, it doesn't make much sense to compare and insert the updates. Rather, truncate and load will be really fast operation for such activity. However, there is a small risk associated, if the data gets truncated but failed to insert for some reason. We can mitigate this risk by having a backup table. 
 
 After trade off,I have decided to go with truncate and load, with proper rollback mechanism in case of failures.
-
-
-## Clean Up
-To clean up Docker volumes after running the project, you can use the following command:
-```bash
-docker volume rm cob_webapp_db_data
-```
 
 ## To-Do
 - [ ] Write unit tests for frontend.
