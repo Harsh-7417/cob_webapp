@@ -54,7 +54,7 @@ To clean up Docker volumes after running the project, you can use the following 
 docker-compose down --volumes
 ```
 
-## Key architectural decisions/considerations: {#key-decisions}
+## Key architectural decisions/considerations:
 **Question 1** : Should we load the data on every api hit?
 
 **Answer** : Analyzed the data, and learnt that data updation is not frequent and mostly happen once in a month. Hence it doesn't make sense to refresh the data in database on every call. I have designed the backend system to use http response code 304 from the ECB api, which means data will be only loaded/refreshed in our database if there is any change in data from ECB.
