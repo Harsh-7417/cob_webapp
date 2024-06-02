@@ -3,7 +3,6 @@
 ## Overview
 This project collects data from the European Central Bank's (ECB) APIs for the series "Cost of borrowing for households for house purchase - euro area, Euro area (changing composition), Monthly". The collected data is stored in PostgreSQL through an api endpoint provided by the backend(FastApi). Finally, a React web page using Chart.js displays the data from the backend as a line graph.
 
-[Key architectural decisions](#key-decisions)
 
 ## Components
 
@@ -65,6 +64,25 @@ docker-compose down --volumes
 **Answer**: Given it is monthly aggregated data and have only one record per month. So, even if it is 100 years of data, it will be only 100*12 = 1200 records. Hence, it doesn't make much sense to compare and insert the updates. Rather, truncate and load will be really fast operation for such activity. However, there is a small risk associated, if the data gets truncated but failed to insert for some reason. We can mitigate this risk by having a backup table. 
 
 After trade off,I have decided to go with truncate and load, with proper rollback mechanism in case of failures.
+
+## Some corner cases
+
+**Scenario** : What will happen if data accidently gets deleted from table?
+
+Backend will reset the required pointer and will load the latest data again.
+
+**Scenario** : What if we get error processing the data, will backend still truncate the table?
+
+Backend is designed with proper exception handling and will prevent the table to truncate.
+
+**Scenario** : What if the table gets deleted accidently? How fast we can recover?
+
+Just redploy the Backend system and it will create all required tables.
+
+**Scenario** : Will backend create the table on every deployment?
+
+No, It will only create if table does not exist.
+
 
 ## To-Do
 - [ ] Write unit tests for frontend.

@@ -78,6 +78,7 @@ class TestCOBDataTransformer(unittest.TestCase):
 
         transformed_data = COBDataTransformer.transform_data(mock_cob_api_response)
         self.assertEqual(transformed_data, expected_data)
+        self.assertIsNotNone(COBDataExtractor.last_modified)
 
     def test_transform_data_exception(self):
         """Test handling of exceptions during data transformation."""
@@ -86,3 +87,4 @@ class TestCOBDataTransformer(unittest.TestCase):
         transformed_data = COBDataTransformer.transform_data(raw_data)
 
         self.assertEqual(transformed_data, [])
+        self.assertIsNone(COBDataExtractor.last_modified)

@@ -28,7 +28,7 @@ services:
     environment:
       DATABASE_URL: "postgresql://${DB_USER}:${DB_PSWD}@db:${DB_PORT}/${DB_NAME}"
       COB_API: ${ECB_COB_API}
-      LOG_LEVEL: "info"
+      LOG_LEVEL: "info" #use debug to see detailed logs
     healthcheck:
       test:
         [
@@ -61,7 +61,7 @@ services:
       backend:
         condition: service_healthy
     environment:
-      BACKEND_URL: "http://backend:8000/v1/data"
+      BACKEND_URL: "http://backend:8000"
   # frontend-tests:
   #   build:
   #     context: ./frontend

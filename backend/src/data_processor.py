@@ -64,4 +64,5 @@ class COBDataTransformer:
             return transformed_data
         except Exception:
             logger.exception("Error transforming raw COB data")
+            COBDataExtractor.last_modified = None  # reset to fetch latest data from ECB api
             return []
